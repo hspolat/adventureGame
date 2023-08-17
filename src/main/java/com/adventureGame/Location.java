@@ -1,3 +1,4 @@
+package src.main.java.com.adventureGame;
 public abstract class Location {
     Player player;
     String name;

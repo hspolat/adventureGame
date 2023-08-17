@@ -1,3 +1,4 @@
+package src.main.java.com.adventureGame;
 public class Player {
     //public Inventory inventory;
     private int damage;
@@ -5,11 +6,29 @@ public class Player {
     private int money;
     private String name;
     private String charName;
-    public void SelectChar(){
-
+    public void selectChar(String input){
+        switch (input){
+            case "1":
+                initPlayer(new Samurai());
+                break;
+            case "2":
+                initPlayer(new Archer());
+                break;
+            case "3":
+                initPlayer(new Knight());
+                break;
+            default:
+                initPlayer(new Samurai());
+        }
+    }
+    public void initPlayer(GameChar gameChar){
+        this.setCharName(gameChar.getName());
+        this.setDamage(gameChar.getDamege());
+        this.setMoney(gameChar.getMoney());
+        this.setHealthy(gameChar.getHealth());
     }
     public Player(String name){
-        this.name = name;
+        this.name = name ;
     }
 
     public int getDamage() {
@@ -51,4 +70,5 @@ public class Player {
     public void setCharName(String charName) {
         this.charName = charName;
     }
+
 }
