@@ -1,4 +1,5 @@
 package src.main.java.com.adventureGame;
+import java.util.Scanner;
 public class Player {
     //public Inventory inventory;
     private int damage;
@@ -6,8 +7,13 @@ public class Player {
     private int money;
     private String name;
     private String charName;
-    public void selectChar(String input){
-        switch (input){
+    private Inventory inventory;
+
+    Scanner input =  new Scanner(System.in);
+    public void selectChar(){
+        System.out.println("For Samurai type 1,\nFor Archer type 2,\nFor Knight type 3\n\nChoice? : ");
+        String select = input.nextLine();
+        switch (select){
             case "1":
                 initPlayer(new Samurai());
                 break;
@@ -28,7 +34,8 @@ public class Player {
         this.setHealthy(gameChar.getHealth());
     }
     public Player(String name){
-        this.name = name ;
+        this.name = name;
+        this.inventory =  new Inventory();
     }
 
     public int getDamage() {
@@ -69,6 +76,14 @@ public class Player {
 
     public void setCharName(String charName) {
         this.charName = charName;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
     }
 
 }
