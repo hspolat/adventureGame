@@ -19,7 +19,8 @@ public class Game {
         Location location = null;
 
         while(true){
-
+            System.out.println("###########################################");
+            player.printInfo();
             System.out.println("Game is starting! Select an option.");
             System.out.println("################## Areas #########################\nSafeHouse: 1 >> You are in safe in this area. \nToolStore: 2 >> You can buy armor or weapons in this area.");
             String select = input.nextLine();

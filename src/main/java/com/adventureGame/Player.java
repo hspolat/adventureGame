@@ -1,7 +1,6 @@
 package src.main.java.com.adventureGame;
 import java.util.Scanner;
 public class Player {
-    //public Inventory inventory;
     private int damage;
     private int healthy;
     private int money;
@@ -36,6 +35,13 @@ public class Player {
     public Player(String name){
         this.name = name;
         this.inventory =  new Inventory();
+    }
+
+    public void printInfo(){
+        System.out.println("Your Weapon: " + this.getInventory().getWeapon().getName()
+        + "\n Your damage: " + this.getDamage()
+        + "\n Your health: " + this.getHealthy()
+        + "\n your money: " + this.getMoney());
     }
 
     public int getDamage() {

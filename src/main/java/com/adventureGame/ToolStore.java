@@ -62,15 +62,14 @@ public class ToolStore extends NormalLoc {
             if (selectedWeapon.getPrice() > this.getPlayer().getMoney()){
                 System.out.println("You're poor. Earn some money or select another weapon!");
             } else {
-
                 int balance = this.getPlayer().getMoney() - selectedWeapon.getPrice();
                 this.getPlayer().setMoney(balance);
-                System.out.println("You've bought the " + selectedWeapon.getName() + " weapon!");
-                System.out.println("Your current money: " + getPlayer().getMoney());
-                System.out.println("###########################################");
-                System.out.println("Eski silahın: " + this.getPlayer().getInventory().getWeapon().getName());
+
                 this.getPlayer().getInventory().setWeapon(selectedWeapon);
-                System.out.println("Your new weapon: " + this.getPlayer().getInventory().getWeapon().getName());
+                int damage = this.getPlayer().getDamage() + this.getPlayer().getInventory().getWeapon().getDamage();
+                this.getPlayer().setDamage(damage);
+
+                System.out.println("You've bought the " + selectedWeapon.getName() + " weapon!");
             }
         }
     }
@@ -95,10 +94,13 @@ public class ToolStore extends NormalLoc {
 
             if (selectedArmor.getPrice() > this.getPlayer().getMoney()){
                 System.out.println("You're poor. Earn some money or select another armor!");
-            } else {
-                System.out.println("You've bought the " + selectedArmor.getName() + " armor!");
+            }else {
                 int balance = this.getPlayer().getMoney() - selectedArmor.getPrice();
                 this.getPlayer().setMoney(balance);
+
+                this.getPlayer().getInventory().setArmor(selectedArmor);
+                int defense = this.getPlayer().getHealthy() + this.getPlayer().getInventory().getArmor().getDefense();
+                this.getPlayer().setHealthy(defense);
                 System.out.println("Your current money: " + getPlayer().getMoney());
             }
         }
