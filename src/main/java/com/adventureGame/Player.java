@@ -41,6 +41,7 @@ public class Player {
         System.out.println("Your Weapon: " + this.getInventory().getWeapon().getName()
         + "\n Your damage: " + this.getDamage()
         + "\n Your health: " + this.getHealthy()
+        + "\n Your Defense Block: " + this.getInventory().getArmor().getDefense()
         + "\n your money: " + this.getMoney());
     }
 
@@ -91,5 +92,4 @@ public class Player {
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
     }
-
 }

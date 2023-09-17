@@ -47,29 +47,32 @@ public class ToolStore extends NormalLoc {
         for(Weapon w: Weapon.weapons() ){
             System.out.println(w.getId() + "-" + w.getName() + ": Damage > " + w.getDamage() + ", Price > " + w.getPrice());
         }
+        System.out.println("0 - EXİT");
     }
 
     public void buyWeapon(){
         int selectedItem = scanner.nextInt();
-        while(selectedItem < 1 || selectedItem > Weapon.weapons().length){
+        while(selectedItem < 0 || selectedItem > Weapon.weapons().length){
             System.out.println("Wrong choice. Try again");
             selectedItem = scanner.nextInt();
         }
 
-        Weapon selectedWeapon = Weapon.getWeaponById(selectedItem);
-        if (selectedWeapon != null){
+        if(selectedItem != 0){
+            Weapon selectedWeapon = Weapon.getWeaponById(selectedItem);
+            if (selectedWeapon != null){
 
-            if (selectedWeapon.getPrice() > this.getPlayer().getMoney()){
-                System.out.println("You're poor. Earn some money or select another weapon!");
-            } else {
-                int balance = this.getPlayer().getMoney() - selectedWeapon.getPrice();
-                this.getPlayer().setMoney(balance);
+                if (selectedWeapon.getPrice() > this.getPlayer().getMoney()){
+                    System.out.println("You're poor. Earn some money or select another weapon!");
+                } else {
+                    int balance = this.getPlayer().getMoney() - selectedWeapon.getPrice();
+                    this.getPlayer().setMoney(balance);
 
-                this.getPlayer().getInventory().setWeapon(selectedWeapon);
-                int damage = this.getPlayer().getDamage() + this.getPlayer().getInventory().getWeapon().getDamage();
-                this.getPlayer().setDamage(damage);
+                    this.getPlayer().getInventory().setWeapon(selectedWeapon);
+                    int damage = this.getPlayer().getDamage() + this.getPlayer().getInventory().getWeapon().getDamage();
+                    this.getPlayer().setDamage(damage);
 
-                System.out.println("You've bought the " + selectedWeapon.getName() + " weapon!");
+                    System.out.println("You've bought the " + selectedWeapon.getName() + " weapon!");
+                }
             }
         }
     }
@@ -80,28 +83,29 @@ public class ToolStore extends NormalLoc {
         for(Armor a: Armor.armors() ){
             System.out.println(a.getId() + "-" + a.getName() + ": Damage > " + a.getDefense() + ", Price > " + a.getPrice());
         }
+        System.out.println("0 - EXİT");
     }
 
     public void buyArmor(){
         int selectedItem = scanner.nextInt();
-        while(selectedItem < 1 || selectedItem > Armor.armors().length){
+        while(selectedItem < 0 || selectedItem > Armor.armors().length){
             System.out.println("Wrong choice. Try again");
             selectedItem = scanner.nextInt();
         }
 
-        Armor selectedArmor = Armor.getArmorById(selectedItem);
-        if (selectedArmor != null){
+        if (selectedItem != 0){
+            Armor selectedArmor = Armor.getArmorById(selectedItem);
+            if (selectedArmor != null){
 
-            if (selectedArmor.getPrice() > this.getPlayer().getMoney()){
-                System.out.println("You're poor. Earn some money or select another armor!");
-            }else {
-                int balance = this.getPlayer().getMoney() - selectedArmor.getPrice();
-                this.getPlayer().setMoney(balance);
+                if (selectedArmor.getPrice() > this.getPlayer().getMoney()){
+                    System.out.println("You're poor. Earn some money or select another armor!");
+                }else {
+                    int balance = this.getPlayer().getMoney() - selectedArmor.getPrice();
+                    this.getPlayer().setMoney(balance);
 
-                this.getPlayer().getInventory().setArmor(selectedArmor);
-                int defense = this.getPlayer().getHealthy() + this.getPlayer().getInventory().getArmor().getDefense();
-                this.getPlayer().setHealthy(defense);
-                System.out.println("Your current money: " + getPlayer().getMoney());
+                    this.getPlayer().getInventory().setArmor(selectedArmor);
+                    System.out.println("Your current money: " + getPlayer().getMoney());
+                }
             }
         }
     }
