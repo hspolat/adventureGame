@@ -33,6 +33,9 @@ public class Game {
                 case "2":
                     location = new ToolStore(player);
                     break;
+                case "3":
+                    location = new Cave(player);
+                    break;
                 case "0":
                     location = null;
                     break;
@@ -50,8 +53,4 @@ public class Game {
         }
 
     };
-
-
-
-
 }
