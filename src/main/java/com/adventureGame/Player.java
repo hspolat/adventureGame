@@ -7,8 +7,7 @@ public class Player {
     private String name;
     private String charName;
     private Inventory inventory;
-
-    Scanner input =  new Scanner(System.in);
+    public static Scanner input =  new Scanner(System.in);
     public void selectChar(){
         System.out.println("For Samurai type 1,\nFor Archer type 2,\nFor Knight type 3\n\nChoice? : ");
         String select = input.nextLine();

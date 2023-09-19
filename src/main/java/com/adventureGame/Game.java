@@ -22,9 +22,14 @@ public class Game {
             System.out.println("###########################################");
             player.printInfo();
             System.out.println("Game is starting! Select an option.");
-            System.out.println("################## Areas #########################\nSafeHouse: 1 >> You are in safe in this area. " +
+            System.out.println("################## Areas #########################" +
+                    "\nSafeHouse: 1 >> You are in safe in this area. " +
                     "\nToolStore: 2 >> You can buy armor or weapons in this area." +
-                    "\nExit: 0");
+                    "\nCave     : 3 >> Battle area! Zombies live there." +
+                    "\nForest   : 4 >> Battle area! Vampires live there. " +
+                    "\nRiver    : 5 >> Battle area! Bears live there. " +
+                    "\nExit: 0"
+            );
             String select = input.nextLine();
             switch (select){
                 case "1":
@@ -36,6 +41,12 @@ public class Game {
                 case "3":
                     location = new Cave(player);
                     break;
+                case "4":
+                    location = new Forest(player);
+                    break;
+                case "5":
+                    location = new River(player);
+                    break;
                 case "0":
                     location = null;
                     break;
@@ -43,7 +54,7 @@ public class Game {
                     location = new SafeHouse(player);
             }
             if (location == null){
-                System.out.println("Good By..");
+                System.out.println("Good Bye..");
                 break;
             }
             if(!location.onLocation()){

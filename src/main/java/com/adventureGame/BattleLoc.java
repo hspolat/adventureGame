@@ -1,11 +1,14 @@
 package src.main.java.com.adventureGame;
 
+import java.util.Locale;
 import java.util.Random;
+import java.util.Scanner;
 
 public abstract class BattleLoc extends Location {
     private Obstacle obstacle;
     private String award;
     private int maxObstacle;
+    Scanner input = new Scanner(System.in);
 
     BattleLoc(Player player, String name, Obstacle obstacle, String award, int maxObstacle) {
         super(player, name);
@@ -15,8 +18,16 @@ public abstract class BattleLoc extends Location {
     }
     public boolean onLocation(){
         int obsNumber = this.randomObstacleNumber();
-        System.out.println(this.getName() + "'dasın! Burada " + obsNumber + " tane " +  this.obstacle.getName() + " yaşıyor!");
-        System.out.println("Dikkatli Ol!");
+        System.out.println("You're in " + this.getName() + "! " + obsNumber + " " + this.obstacle.getName() + "'s live here! \nBe careful!");
+        System.out.println("What do you want to do here?");
+        System.out.println("\nFİGHT >> Type F" +
+                "\nRetreat >> Type R");
+
+        String selectCase = input.nextLine();
+        selectCase = selectCase.toUpperCase();
+        if (selectCase.equals("F")){
+            System.out.println("The war processes are activated. Hold your position.");
+        }
         return true;
     }
 
