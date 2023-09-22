@@ -6,12 +6,14 @@ public abstract class Obstacle {
     private int damage;
     private int health;
     private int award;
+    private int originalHealth;
 
-    public Obstacle(int id, String name, int damage, int health, int award) {
+    public Obstacle(int id, String name, int damage, int health, int award, int originalHealth) {
         this.id = id;
         this.name = name;
         this.damage = damage;
         this.health = health;
+        this.originalHealth = health;
         this.award = award;
     }
 
@@ -53,5 +55,13 @@ public abstract class Obstacle {
 
     public void setAward(int award) {
         this.award = award;
+    }
+
+    public int getOriginalHealth() {
+        return originalHealth;
+    }
+
+    public void setOriginalHealth(int originalHealth) {
+        this.originalHealth = originalHealth;
     }
 }

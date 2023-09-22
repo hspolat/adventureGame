@@ -27,8 +27,17 @@ public abstract class BattleLoc extends Location {
         String selectCase = input.nextLine();
         selectCase = selectCase.toUpperCase();
         if (selectCase.equals("F")){
-            System.out.println("The war processes are activated. Hold your position.");
+            if (combat(obsNumber)) {
+                System.out.println("You kill all " + this.getObstacle().getName() + "'s in " +  this.getName() + "!");
+                return true;
+            }
         }
+
+        if (this.getPlayer().getHealthy() < 0){
+            System.out.println("You're dead. Game over..");
+            return false;
+        }
+
         return true;
     }
 
@@ -36,16 +45,38 @@ public abstract class BattleLoc extends Location {
         for (int i = 1; i <= maxObstacle; i++){
             playerStats();
             obstacleStats();
+            this.getObstacle().setHealth(this.getObstacle().getOriginalHealth());
             while (this.getObstacle().getHealth() > 0 && this.getPlayer().getHealthy() > 0){
                 System.out.println("<F>ight or <R>un : ?");
                 String selectCombatOption = input.nextLine().toUpperCase();
-                if(selectCombatOption == "F"){
-
+                if(selectCombatOption.equals("F")){
+                    System.out.println("You hit the monster!");
+                    this.getObstacle().setHealth(this.getObstacle().getHealth() - this.getPlayer().getDamage());
+                    afterHit();
+                    if (this.getObstacle().getHealth() > 0){
+                        System.out.println();
+                        System.out.println("The obstacle hits you!");
+                        int obstacleDamage = this.getObstacle().getDamage() - this.getPlayer().getInventory().getArmor().getDefense();
+                        if(obstacleDamage < 0 ){
+                            obstacleDamage = 0;
+                        }
+                        this.getPlayer().setHealthy(this.getPlayer().getHealthy() - obstacleDamage);
+                        if(this.getPlayer().getHealthy() < 0 ){
+                            this.getPlayer().setHealthy(0);
+                        }
+                        afterHit();
+                    }
                 }
 
             }
         }
         return false;
+    }
+
+    public void afterHit() {
+        System.out.println("Your Health: " + this.getPlayer().getHealthy());
+        System.out.println("Obstacles Health: " + this.getObstacle().getHealth());
+        System.out.println("---------");
     }
 
     public void playerStats(){
@@ -57,6 +88,7 @@ public abstract class BattleLoc extends Location {
         System.out.println("Damage: " + this.getPlayer().getDamage());
         System.out.println("Block/Defense: " + this.getPlayer().getInventory().getArmor().getDefense());
         System.out.println("Money: " + this.getPlayer().getMoney());
+        System.out.println();
     }
 
     public void obstacleStats(){
@@ -64,8 +96,9 @@ public abstract class BattleLoc extends Location {
         System.out.println("--------------------------------------");
         System.out.println("Obstacle: " + this.getObstacle().getName());
         System.out.println("Health: " + this.getObstacle().getHealth());
-        System.out.println("Damage: " + this.getObstacle().getHealth());
+        System.out.println("Damage: " + this.getObstacle().getDamage());
         System.out.println("Award: " + this.getObstacle().getAward());
+        System.out.println();
     }
 
     public int randomObstacleNumber(){
