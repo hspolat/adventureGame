@@ -46,6 +46,9 @@ public abstract class Obstacle {
     }
 
     public void setHealth(int health) {
+        if(health < 0) {
+            health = 0;
+        }
         this.health = health;
     }
 

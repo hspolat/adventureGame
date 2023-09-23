@@ -5,7 +5,8 @@ public class Player {
     private int healthy;
     private int money;
     private String name;
-    private String charName;
+    //private String charName;
+    private GameChar gameChar;
     private Inventory inventory;
     public static Scanner input =  new Scanner(System.in);
     public void selectChar(){
@@ -13,24 +14,19 @@ public class Player {
         String select = input.nextLine();
         switch (select){
             case "1":
-                initPlayer(new Samurai());
+                this.setGameChar(new Samurai());
                 break;
             case "2":
-                initPlayer(new Archer());
+                this.setGameChar(new Archer());
                 break;
             case "3":
-                initPlayer(new Knight());
+                this.setGameChar(new Knight());
                 break;
             default:
-                initPlayer(new Samurai());
+                this.setGameChar(new Samurai());
         }
     }
-    public void initPlayer(GameChar gameChar){
-        this.setCharName(gameChar.getName());
-        this.setDamage(gameChar.getDamege());
-        this.setMoney(gameChar.getMoney());
-        this.setHealthy(gameChar.getHealth());
-    }
+
     public Player(String name){
         this.name = name;
         this.inventory =  new Inventory();
@@ -57,6 +53,9 @@ public class Player {
     }
 
     public void setHealthy(int healthy) {
+        if(healthy < 0) {
+            healthy = 0;
+        }
         this.healthy = healthy;
     }
 
@@ -76,12 +75,27 @@ public class Player {
         this.name = name;
     }
 
+    /*
     public String getCharName() {
         return charName;
     }
+     */
 
+    /*
     public void setCharName(String charName) {
         this.charName = charName;
+    }
+     */
+
+    public GameChar getGameChar() {
+        return gameChar;
+    }
+
+    public void setGameChar(GameChar gameChar) {
+        this.gameChar = gameChar;
+        this.damage = gameChar.getDamage();
+        this.healthy = gameChar.getHealth();
+        this.money = gameChar.getMoney();
     }
 
     public Inventory getInventory() {

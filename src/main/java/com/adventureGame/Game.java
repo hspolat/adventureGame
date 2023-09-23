@@ -1,58 +1,52 @@
-package src.main.java.com.adventureGame;;
-import java.util.Scanner;
+package src.main.java.com.adventureGame;
 
+import java.sql.SQLOutput;
+import java.util.Scanner;
 
 public class Game {
     private Scanner input = new Scanner(System.in);
     public Player player;
-    public Location location;
     public void start(){
         System.out.println("Welcome to game!!!");
         System.out.println("What's your name?: ");
         String playerName = input.nextLine();
         player =  new Player(playerName);
 
+        System.out.println("""
+        ------------------------------
+        Now you must select a Hero!\s 
+        """);
         player.selectChar();
-        System.out.println("###########################################");
-        System.out.println("Hi " + player.getCharName() + " " + player.getName() + "!");
+        System.out.println("Hi " + player.getGameChar().getName() + " " + player.getName() + "!");
 
         Location location = null;
 
         while(true){
-            System.out.println("###########################################");
+            System.out.println("------------------------------");
             player.printInfo();
-            System.out.println("Game is starting! Select an option.");
-            System.out.println("################## Areas #########################" +
-                    "\nSafeHouse: 1 >> You are in safe in this area. " +
-                    "\nToolStore: 2 >> You can buy armor or weapons in this area." +
-                    "\nCave     : 3 >> Battle area! Zombies live there." +
-                    "\nForest   : 4 >> Battle area! Vampires live there. " +
-                    "\nRiver    : 5 >> Battle area! Bears live there. " +
-                    "\nExit: 0"
+            System.out.println();
+            System.out.println("""
+                    --------------- Areas ---------------
+                    Select an option (eg 1, 2)
+                    
+                    SafeHouse: 1 >> You are in safe in this area.\s
+                    ToolStore: 2 >> You can buy armor or weapons in this area.
+                    Cave     : 3 >> Battle area! Zombies living there.
+                    Forest   : 4 >> Battle area! Vampires living there.\s
+                    River    : 5 >> Battle area! Bears living there.\s
+                    Exit: 0
+                    """
             );
             String select = input.nextLine();
-            switch (select){
-                case "1":
-                    location = new SafeHouse(player);
-                    break;
-                case "2":
-                    location = new ToolStore(player);
-                    break;
-                case "3":
-                    location = new Cave(player);
-                    break;
-                case "4":
-                    location = new Forest(player);
-                    break;
-                case "5":
-                    location = new River(player);
-                    break;
-                case "0":
-                    location = null;
-                    break;
-                default:
-                    location = new SafeHouse(player);
-            }
+            location = switch (select) {
+                case "1" -> new SafeHouse(player);
+                case "2" -> new ToolStore(player);
+                case "3" -> new Cave(player);
+                case "4" -> new Forest(player);
+                case "5" -> new River(player);
+                case "0" -> null;
+                default -> new SafeHouse(player);
+            };
             if (location == null){
                 System.out.println("Good Bye..");
                 break;
@@ -63,5 +57,5 @@ public class Game {
             }
         }
 
-    };
+    }
 }

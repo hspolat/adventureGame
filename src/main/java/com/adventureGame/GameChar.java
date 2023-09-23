@@ -8,12 +8,14 @@ public abstract class  GameChar {
     private int health;
     private int money;
     private String name;
-    public GameChar(int id, int damage, int health, int money, String name){
+    private int defaultHealth;
+    public GameChar(int id, int damage, int health, int money, String name, int defaultHealth){
         this.id = id;
         this.damage = damage;
         this.money = money;
         this.health = health;
         this.name = name;
+        this.defaultHealth = defaultHealth;
     }
 
     public int getDamege() {
@@ -46,5 +48,29 @@ public abstract class  GameChar {
 
     public void setName(String name){
         this.name = name;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getDefaultHealth() {
+        return defaultHealth;
+    }
+
+    public void setDefaultHealth(int defaultHealth) {
+        this.defaultHealth = defaultHealth;
     }
 }

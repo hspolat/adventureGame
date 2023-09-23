@@ -8,16 +8,21 @@ public class ToolStore extends NormalLoc {
     }
     @Override
     public boolean onLocation() {
-        System.out.println("###########################################");
-        System.out.println("This is store! you can buy weapons and armors for your hero.");
-        System.out.println("1 - Weapons");
-        System.out.println("2 -  Armors");
-        System.out.println("3 - Leave Store");
-        System.out.print("Your choice?: ");
+        System.out.println("""
+                -------------------------------------
+                This is store! you can buy weapons and armors for your hero. Select an option (eg 1, 2)\s
+                
+                1 - Weapons\s
+                2 -  Armors\s
+                3 - Leave Store\s
+                Your choice?:\s
+                """
+        );
+
         int selectedCase = scanner.nextInt();
 
         while(selectedCase < 1 || selectedCase > 3){
-            System.out.println("Geçersiz değer. Tekrar deneyiniz.");
+            System.out.println("Wrong option. Try again");
             selectedCase = scanner.nextInt();
         }
 
@@ -42,7 +47,7 @@ public class ToolStore extends NormalLoc {
 
     public void printWeapon(){
 
-        System.out.println("################ Weapons #################");
+        System.out.println("------------------ Weapons ------------------");
         System.out.println("Select an option: ");
         for(Weapon w: Weapon.weapons() ){
             System.out.println(w.getId() + "-" + w.getName() + ": Damage > " + w.getDamage() + ", Price > " + w.getPrice());
@@ -78,7 +83,7 @@ public class ToolStore extends NormalLoc {
     }
 
     public void printArmor(){
-        System.out.println("################ Armors #################");
+        System.out.println("------------------ Armors ------------------");
         System.out.println("Select an option: ");
         for(Armor a: Armor.armors() ){
             System.out.println(a.getId() + "-" + a.getName() + ": Damage > " + a.getDefense() + ", Price > " + a.getPrice());
