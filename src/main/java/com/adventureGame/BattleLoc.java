@@ -42,18 +42,44 @@ public abstract class BattleLoc extends Location {
             this.getObstacle().setHealth(this.getObstacle().getOriginalHealth());
             playerStats();
             obstacleStats(i);
+
+            Random rnd = new Random();
+            int firstFire = rnd.nextInt(2);
+
             while (this.getObstacle().getHealth() > 0 && this.getPlayer().getHealthy() > 0){
                 System.out.println("<F>ight or <R>un : ?");
                 String selectCombatOption = input.nextLine().toUpperCase();
+
                 if(selectCombatOption.equals("F")){
-                    System.out.println("You hitted the monster!");
-                    this.getObstacle().setHealth(this.getObstacle().getHealth() - this.getPlayer().getDamage());
-                    afterHit();
-                    if(this.getObstacle().getHealth() <= 0){
-                        System.out.println("You killed the " + i + ". " + this.getObstacle().getName() + "!");
-                        this.getPlayer().setMoney(this.getPlayer().getMoney() + this.getObstacle().getAward());
-                    }
-                    else {
+                    if(firstFire == 0){
+                        System.out.println("You hitted the monster!");
+                        this.getObstacle().setHealth(this.getObstacle().getHealth() - this.getPlayer().getDamage());
+                        afterHit();
+                        if(this.getObstacle().getHealth() <= 0){
+                            System.out.println("You killed the " + i + ". " + this.getObstacle().getName() + "!");
+                            this.getPlayer().setMoney(this.getPlayer().getMoney() + this.getObstacle().getAward());
+                            continue;
+                        }
+                    } else if(firstFire == 1) {
+                        System.out.println();
+                        System.out.println("The obstacle hitted you!");
+                        int obstacleDamage = this.getObstacle().getDamage() - this.getPlayer().getInventory().getArmor().getDefense();
+                        if(obstacleDamage < 0 ){
+                            obstacleDamage = 0;
+                        }
+                        this.getPlayer().setHealthy(this.getPlayer().getHealthy() - obstacleDamage);
+                        afterHit();
+
+                    } else{
+                        System.out.println("You hitted the monster!");
+                        this.getObstacle().setHealth(this.getObstacle().getHealth() - this.getPlayer().getDamage());
+                        afterHit();
+                        if(this.getObstacle().getHealth() <= 0){
+                            System.out.println("You killed the " + i + ". " + this.getObstacle().getName() + "!");
+                            this.getPlayer().setMoney(this.getPlayer().getMoney() + this.getObstacle().getAward());
+                            continue;
+                        }
+
                         System.out.println();
                         System.out.println("The obstacle hitted you!");
                         int obstacleDamage = this.getObstacle().getDamage() - this.getPlayer().getInventory().getArmor().getDefense();
@@ -63,6 +89,8 @@ public abstract class BattleLoc extends Location {
                         this.getPlayer().setHealthy(this.getPlayer().getHealthy() - obstacleDamage);
                         afterHit();
                     }
+                    firstFire = -1;
+
                 } else {
                     return false;
                 }
