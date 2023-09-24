@@ -33,11 +33,17 @@ public class Player {
     }
 
     public void printInfo(){
-        System.out.println("Your Weapon: " + this.getInventory().getWeapon().getName()
-        + "\n Your damage: " + this.getDamage()
-        + "\n Your health: " + this.getHealthy()
-        + "\n Your Defense Block: " + this.getInventory().getArmor().getDefense()
-        + "\n your money: " + this.getMoney());
+        System.out.println("Your Skills: "
+                + "\n"
+                + "\nWeapon: " + this.getInventory().getWeapon().getName()
+                + "\nDamage: " + this.getDamage()
+                + "\nHealth: " + this.getHealthy()
+                + "\nDefense Block: " + this.getInventory().getArmor().getDefense()
+                + "\nMoney: " + this.getMoney()
+                + "\nHas Food: " + this.getInventory().isHasFood()
+                + "\nHas Water: " + this.getInventory().isHasWater()
+                + "\nHas Fire Wood: " + this.getInventory().isHasFireWood()
+        );
     }
 
     public int getDamage() {
@@ -74,19 +80,6 @@ public class Player {
     public void setName(String name) {
         this.name = name;
     }
-
-    /*
-    public String getCharName() {
-        return charName;
-    }
-     */
-
-    /*
-    public void setCharName(String charName) {
-        this.charName = charName;
-    }
-     */
-
     public GameChar getGameChar() {
         return gameChar;
     }
