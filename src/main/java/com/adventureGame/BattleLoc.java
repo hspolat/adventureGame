@@ -1,6 +1,5 @@
 package src.main.java.com.adventureGame;
 
-import java.sql.SQLOutput;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -20,21 +19,12 @@ public abstract class BattleLoc extends Location {
         this.maxObstacle = maxObstacle;
         this.isOpen = true;
     }
-    BattleLoc(Player player, String name, Obstacle obstacle, int maxObstacle) {
-        super(player, name);
-        this.obstacle = obstacle;
-        this.maxObstacle = maxObstacle;
-        this.isOpen = true;
-    }
-
-
     public boolean onLocation(){
         int obsNumber = this.randomObstacleNumber();
         System.out.println("You're in " + this.getName() + "! " + obsNumber + " " + this.obstacle.getName() + "'s live here! \nBe careful!");
         System.out.println("What do you want to do here?");
         System.out.println("\nFİGHT >> Type F" +
                 "\nRetreat >> Type R");
-
         String selectCase = input.nextLine();
         selectCase = selectCase.toUpperCase();
         if (selectCase.equals("F") && combat(obsNumber)){
@@ -52,7 +42,7 @@ public abstract class BattleLoc extends Location {
             this.getObstacle().setHealth(this.getObstacle().getOriginalHealth());
 
             //this.obstacle = createObstacle(this.obstacle.getId()); will returns an new obstacle
-            if(this.getObstacle().getName() == "Snake"){
+            if(this.getObstacle().getName().equals("Snake")){
                 this.obstacle.setDamage(this.obstacle.randomDamage());
             }
 
@@ -72,7 +62,7 @@ public abstract class BattleLoc extends Location {
                         this.getObstacle().setHealth(this.getObstacle().getHealth() - this.getPlayer().getDamage());
                         afterHit();
                         if(this.getObstacle().getHealth() <= 0){
-                            if(this.obstacle.getName() == "Snake"){
+                            if(this.obstacle.getName().equals("Snake")){
                                 this.setAward(this.randomAward());
                                 this.setComplexAward(this.award);
                             }
@@ -95,7 +85,7 @@ public abstract class BattleLoc extends Location {
                         this.getObstacle().setHealth(this.getObstacle().getHealth() - this.getPlayer().getDamage());
                         afterHit();
                         if(this.getObstacle().getHealth() <= 0){
-                            if(this.obstacle.getName() == "Snake"){
+                            if(this.obstacle.getName().equals("Snake")){
                                 this.setAward(this.randomAward());
                                 this.setComplexAward(this.award);
                             }
@@ -163,28 +153,12 @@ public abstract class BattleLoc extends Location {
         return obstacle;
     }
 
-    public void setObstacle(Obstacle obstacle) {
-        this.obstacle = obstacle;
-    }
-
     public String getAward() {
         return award;
     }
 
     public void setAward(String award) {
         this.award = award;
-    }
-
-    public int getMaxObstacle() {
-        return maxObstacle;
-    }
-
-    public void setMaxObstacle(int maxObstacle) {
-        this.maxObstacle = maxObstacle;
-    }
-
-    public boolean isOpen() {
-        return isOpen;
     }
     public void setOpen(boolean open) {
         isOpen = open;
