@@ -9,15 +9,25 @@ public abstract class BattleLoc extends Location {
     private String award;
     private int maxObstacle;
     private boolean isOpen;
+    private String[] awards = {"Money", "Weapon", "Armor"};
     Scanner input = new Scanner(System.in);
+    Random rnd =  new Random();
 
-    BattleLoc(Player player, String name, Obstacle obstacle, String award, int maxObstacle, boolean isOpen) {
+    BattleLoc(Player player, String name, Obstacle obstacle, String award, int maxObstacle) {
         super(player, name);
         this.obstacle = obstacle;
         this.award  = award;
         this.maxObstacle = maxObstacle;
         this.isOpen = true;
     }
+    BattleLoc(Player player, String name, Obstacle obstacle, int maxObstacle) {
+        super(player, name);
+        this.obstacle = obstacle;
+        this.maxObstacle = maxObstacle;
+        this.isOpen = true;
+    }
+
+
     public boolean onLocation(){
         int obsNumber = this.randomObstacleNumber();
         System.out.println("You're in " + this.getName() + "! " + obsNumber + " " + this.obstacle.getName() + "'s live here! \nBe careful!");
@@ -40,6 +50,12 @@ public abstract class BattleLoc extends Location {
     public boolean combat(int maxObstacle){
         for (int i = 1; i <= maxObstacle; i++){
             this.getObstacle().setHealth(this.getObstacle().getOriginalHealth());
+
+            //this.obstacle = createObstacle(this.obstacle.getId()); will returns an new obstacle
+            if(this.getObstacle().getName() == "Snake"){
+                this.obstacle.setDamage(this.obstacle.randomDamage());
+            }
+
             playerStats();
             obstacleStats(i);
 
@@ -56,6 +72,10 @@ public abstract class BattleLoc extends Location {
                         this.getObstacle().setHealth(this.getObstacle().getHealth() - this.getPlayer().getDamage());
                         afterHit();
                         if(this.getObstacle().getHealth() <= 0){
+                            if(this.obstacle.getName() == "Snake"){
+                                this.setAward(this.randomAward());
+                                this.setComplexAward(this.award);
+                            }
                             System.out.println("You killed the " + i + ". " + this.getObstacle().getName() + "!");
                             this.getPlayer().setMoney(this.getPlayer().getMoney() + this.getObstacle().getAward());
                             continue;
@@ -75,6 +95,10 @@ public abstract class BattleLoc extends Location {
                         this.getObstacle().setHealth(this.getObstacle().getHealth() - this.getPlayer().getDamage());
                         afterHit();
                         if(this.getObstacle().getHealth() <= 0){
+                            if(this.obstacle.getName() == "Snake"){
+                                this.setAward(this.randomAward());
+                                this.setComplexAward(this.award);
+                            }
                             System.out.println("You killed the " + i + ". " + this.getObstacle().getName() + "!");
                             this.getPlayer().setMoney(this.getPlayer().getMoney() + this.getObstacle().getAward());
                             continue;
@@ -174,4 +198,63 @@ public abstract class BattleLoc extends Location {
         }
     }
 
+    public String randomAward(){
+        int number = rnd.nextInt(100);
+        if(number <= 25){
+            return this.awards[0];
+        } else if (number > 25 && number <= 40) {
+            return this.awards[1];
+        } else if (number > 40 && number <= 55) {
+            return this.awards[2];
+        } else {
+            return "No Award";
+        }
+    }
+    public void setComplexAward(String award){
+        switch (award){
+            case "Money" -> setrandomMoneyAward();
+            case "Weapon" -> setRandomWeaponAward();
+            case "Armor" -> setRandomArmorAward();
+        }
+    }
+    
+    public void setrandomMoneyAward(){
+        int number = rnd.nextInt(100);
+        if(number <= 50){
+            this.getPlayer().setMoney(this.getPlayer().getMoney() + 1);
+            System.out.println("You earn 1 money!");
+        } else if(number > 50 && number <= 80){
+            this.getPlayer().setMoney(this.getPlayer().getMoney() + 5);
+            System.out.println("You earn 5 money!");
+        } else if (number >= 80 ) {
+            this.getPlayer().setMoney(this.getPlayer().getMoney() + 10);
+            System.out.println("You earn 10 money!");
+        }
+    }
+    public void setRandomWeaponAward(){
+        int number = rnd.nextInt(100);
+        if(number <= 20){
+            this.getPlayer().getInventory().setWeapon(Weapon.getWeaponById(3));
+            System.out.println("You earn " + this.getPlayer().getInventory().getWeapon().getName() + "!");
+        } else if(number > 20 && number < 50){
+            this.getPlayer().getInventory().setWeapon(Weapon.getWeaponById(2));
+            System.out.println("You earn " + this.getPlayer().getInventory().getWeapon().getName() + "!");
+        } else {
+            this.getPlayer().getInventory().setWeapon(Weapon.getWeaponById(1));
+            System.out.println("You earn " + this.getPlayer().getInventory().getWeapon().getName() + "!");
+        }
+    }
+    public void setRandomArmorAward(){
+        int number = rnd.nextInt(100);
+        if(number <= 20){
+            this.getPlayer().getInventory().setArmor(Armor.getArmorById(3));
+            System.out.println("You earn " + this.getPlayer().getInventory().getArmor().getName() + "!");
+        } else if(number > 20 && number < 50){
+            this.getPlayer().getInventory().setArmor(Armor.getArmorById(2));
+            System.out.println("You earn " + this.getPlayer().getInventory().getArmor().getName() + "!");
+        } else {
+            this.getPlayer().getInventory().setArmor(Armor.getArmorById(1));
+            System.out.println("You earn " + this.getPlayer().getInventory().getArmor().getName() + "!");
+        }
+    }
 }

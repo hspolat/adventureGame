@@ -1,12 +1,15 @@
 package src.main.java.com.adventureGame;
 
+import java.util.Random;
+
 public abstract class Obstacle {
     private int id;
     private String name;
-    private int damage;
+    private  int damage;
     private int health;
     private int award;
     private int originalHealth;
+    Random rnd = new Random();
 
     public Obstacle(int id, String name, int damage, int health, int award, int originalHealth) {
         this.id = id;
@@ -15,6 +18,13 @@ public abstract class Obstacle {
         this.health = health;
         this.originalHealth = health;
         this.award = award;
+    }
+
+    public Obstacle(int id, String name, int health, int originalHealth){
+        this.id = id;
+        this.name = name;
+        this.health = health;
+        this.originalHealth = health;
     }
 
     public int getId() {
@@ -66,5 +76,8 @@ public abstract class Obstacle {
 
     public void setOriginalHealth(int originalHealth) {
         this.originalHealth = originalHealth;
+    }
+    public int randomDamage(){
+        return rnd.nextInt(3, 7);
     }
 }

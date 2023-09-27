@@ -33,6 +33,7 @@ public class Game {
                     Cave     : 3 >> Battle area! Zombies living there.
                     Forest   : 4 >> Battle area! Vampires living there.\s
                     River    : 5 >> Battle area! Bears living there.\s
+                    Mine     : 6 >> Battle area! Snakes living there.\s
                     Exit: 0
                     """
             );
@@ -63,6 +64,9 @@ public class Game {
                     } else {
                         location = new River(player);
                     }
+                }
+                case "6" -> {
+                    location = new Mine(player);
                 }
                 case "0" -> location = null;
                 default -> location = new SafeHouse(player);
